@@ -1,0 +1,49 @@
+$primary: #009688;
+$bg-color: #d9dbd4;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+input {
+    border: 0;
+    outline: none;
+    background-color: transparent;
+}
+
+html {
+    min-height: 100%;
+    background-color: $bg-color;
+    font-family: 'Segoe UI', Helvetica Neue, Helvetica;
+
+    //Background design
+    &::before {
+        content: '';
+        width: 100%;
+        height: 220px;
+        position: absolute;
+        background-color: $primary;
+        z-index: -1;
+    }
+}
+
+//Section container
+section {
+    background: #FFF;
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.400);
+
+    @media(min-width: 1445px) {
+        margin: 2% auto;
+    }
+
+    &.main {
+        display: flex;
+        max-width: 1360px;
+        height: 657px;
+        background-color: #EDEDED;
+    }
+}
