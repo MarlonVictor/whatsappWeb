@@ -3,14 +3,15 @@ import React from 'react';
 import './styles.scss';
 
 
-const ChatItem = () => {
+const ChatItem = ({ onClick, active, data }) => {
     return (
-        <div className="chatItem">{/* Container list */}
-            <img className="avatar" src="https://user-images.githubusercontent.com/62356988/92667795-4d80b500-f2e3-11ea-824c-f4bbf0266ce7.png" alt=""/>
+        /* Container list */
+        <div className={`chatItem ${active ? 'active' : ''}`} onClick={onClick}>
+            <img className="avatar" src={data.image} alt="Avatar"/>
 
             <div className="lines">{/* Chat lines */}
                 <div className="line">{/* Chat individual line */}
-                    <span className="name">Marlon Victor</span>
+                    <span className="name">{data.title}</span>
                     <span className="date">14:00</span>
                 </div>
                 <div className="line">

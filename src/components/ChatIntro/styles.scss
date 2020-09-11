@@ -1,0 +1,29 @@
+.chatIntro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    border-bottom: 6px solid #4ADF83;
+    background-color: #F8F9FA;
+
+    img {
+        width: 250px;
+    }
+    h1 {
+        margin: 30px 0 -5px;
+        font-size: 32px;
+        font-weight: 300;
+        color: #525252;
+    }
+    h2 {
+        padding-bottom: 30px;
+        margin: 20px 0 70px;
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 20px;
+        text-align: center;
+        color: #777;
+        border-bottom: 1px solid #DDD;
+    }
+}

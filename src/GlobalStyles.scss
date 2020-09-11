@@ -17,6 +17,7 @@ html {
     min-height: 100%;
     background-color: $bg-color;
     font-family: 'Segoe UI', Helvetica Neue, Helvetica;
+    overflow: hidden;
 
     //Background design
     &::before {
@@ -42,8 +43,12 @@ section {
 
     &.main {
         display: flex;
-        max-width: 1360px;
-        height: 657px;
+        max-width: 1400px;
+        height: 100vh;
         background-color: #EDEDED;
+
+        @media(min-width: 1445px) {
+            height: 92vh;
+        }
     }
 }
