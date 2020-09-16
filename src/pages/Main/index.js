@@ -19,13 +19,18 @@ const Main = () => {
     ])
 
     const [activeChat, setActiveChat] = useState({})
+    const [user, setUser] = useState({
+        id: 123,
+        avatar: 'https://user-images.githubusercontent.com/62356988/92667795-4d80b500-f2e3-11ea-824c-f4bbf0266ce7.png',
+        name: 'Marlin Poze'
+    })
 
     return (
         <section className="main">
             
             <aside className="container">{/* Left container */}
                 <header>{/* Top header */}
-                    <img src="https://user-images.githubusercontent.com/62356988/92667795-4d80b500-f2e3-11ea-824c-f4bbf0266ce7.png" alt="Avatar"/>
+                    <img src={user.avatar} alt="Avatar"/>
                     <div className="buttons">
                         <div className="btn">
                             <DonutLargeIcon fontSize="small" style={{color: '#919191'}}/>
@@ -63,7 +68,9 @@ const Main = () => {
                     <ChatIntro/>
                 }
                 {activeChat.chatId !== undefined &&
-                    <ChatWindow/>
+                    <ChatWindow
+                        user={user}
+                    />
                 }
             </main>
         </section>

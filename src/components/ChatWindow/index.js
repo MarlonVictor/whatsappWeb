@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 
 import SearchIcon from '@material-ui/icons/Search';
@@ -9,13 +9,60 @@ import SendIcon from '@material-ui/icons/Send';
 import MicIcon from '@material-ui/icons/Mic';
 import CloseIcon from '@material-ui/icons/Close';
 
+import MessageItem from '../MessageItem';
+
 import './styles.scss';
 
 
-const ChatWindow = () => {
+const ChatWindow = ({ user }) => {
+    //Transpiler config
+    let recognition = null;
+    let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+
+    if(SpeechRecognition !== undefined) {
+        recognition = new SpeechRecognition()
+    }
+
+    //States
+    const [listening, setListening] = useState(false)
     const [sendMsg, setSendMsg] = useState(false)
     const [emojiOpen, setEmojiOpen] = useState(false)
     const [text, setText] = useState('')
+    const [list, setList] = useState([
+        {body: 'AQUI É', author: 123, date: '14:00'}, 
+        {body: 'XANDAO', author: 123, date: '14:00'},
+        {body: 'RESPEITA', author: 1, date: '14:00'},
+        {body: 'XANDAO', author: 123, date: '14:00'},
+        {body: 'RESPEITA', author: 1, date: '14:00'},
+        {body: 'XANDAO', author: 123, date: '14:00'},
+        {body: 'RESPEITA', author: 1, date: '14:00'},
+        {body: 'XANDAO', author: 123, date: '14:00'},
+        {body: 'RESPEITA', author: 1, date: '14:00'},
+        {body: 'XANDAO', author: 123, date: '14:00'},
+        {body: 'RESPEITA', author: 1, date: '14:00'},
+        {body: 'XANDAO', author: 123, date: '14:00'},
+        {body: 'RESPEITA', author: 1, date: '14:00'},
+        {body: 'XANDAO', author: 123, date: '14:00'},
+        {body: 'RESPEITA', author: 1, date: '14:00'},
+        {body: 'XANDAO', author: 123, date: '14:00'},
+        {body: 'RESPEITA', author: 1, date: '14:00'},
+        {body: 'XANDAO', author: 123, date: '14:00'},
+        {body: 'RESPEITA', author: 1, date: '14:00'},
+        {body: 'XANDAO', author: 123, date: '14:00'},
+        {body: 'RESPEITA', author: 1, date: '14:00'},
+        {body: 'XANDAO', author: 123, date: '14:00'},
+        {body: 'RESPEITA', author: 1, date: '14:00'},
+        {body: 'RESPEITA', author: 1, date: '14:00'},
+        {body: 'RESPEITA', author: 1, date: '14:00'}
+    ])
+
+    //Makes the chat scroll start below
+    const body = useRef()
+    useEffect(() => {
+        if(body.current.scrollHeight > body.current.offsetHeight) {
+            body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight
+        }
+    }, [list])
 
     //Emoji functions
     function handleEmojiClick(e, emojiObject) {
@@ -28,13 +75,31 @@ const ChatWindow = () => {
         setEmojiOpen(false)
     }
 
+    //Icon functions
+    function handleSendClick() {}
+    function handleMicClick() {
+        if(recognition !== null) {
+            recognition.onstart = () => {
+                setListening(true)
+            }
+            recognition.onend = () => {
+                setListening(false)
+            }
+            recognition.onresult = (e) => {
+                setText(e.results[0][0].transcript)
+            }
+
+            recognition.start()
+        }
+    }
+
 
     return (
         /* Container window */
         <div className="chatWindow">
             <header>{/* Top header */}
                 <div className="info">
-                    <img src="https://user-images.githubusercontent.com/62356988/92667795-4d80b500-f2e3-11ea-824c-f4bbf0266ce7.png"/>
+                    <img src="https://user-images.githubusercontent.com/62356988/92667795-4d80b500-f2e3-11ea-824c-f4bbf0266ce7.png" alt="avatar"/>
                     <p>Marlon</p>
                 </div>
                 <div className="buttons">
@@ -47,7 +112,15 @@ const ChatWindow = () => {
                 </div>
             </header>
 
-            <main></main>
+            <main ref={body}>{/* Chat */}
+                {list.map((item, key) => (
+                    <MessageItem
+                        key={key}
+                        data={item}
+                        user={user}
+                    />
+                ))}
+            </main>
 
             <div className="emojiArea" style={{height: emojiOpen ? '200px' : '0'}}>
                 <EmojiPicker
@@ -81,7 +154,7 @@ const ChatWindow = () => {
                         value={text} 
                         placeholder="Digite uma mensagem"
                         onChange={e => {
-                            e.target.value != '' ? setSendMsg(true) : setSendMsg(false)
+                            e.target.value !== '' ? setSendMsg(true) : setSendMsg(false)
                             setText(e.target.value)
                         }}
                     />
@@ -92,9 +165,11 @@ const ChatWindow = () => {
                             <SendIcon 
                                 fontSize="small" 
                                 style={{color: '#919191'}}
+                                onClick={handleSendClick}
                             /> :
                             <MicIcon 
-                                style={{color: '#919191'}}
+                                style={{color: listening ? '#126ece' : '#919191'}}
+                                onClick={handleMicClick}
                             />
                         }
                     </div>

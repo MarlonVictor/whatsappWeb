@@ -63,12 +63,22 @@ div.emojiArea {
         }
     }
 
+    //Chat
     main {
         flex: 1;
         overflow-y: auto;
         background-color: #E5DDD5;
         background-position: top;
         background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+        padding: 20px 30px;
+
+        &::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
     }
 
     //Bottom
@@ -99,13 +109,3 @@ div.emojiArea {
         }
     }
 }
-
-
-
-// aside.emoji-picker-react {
-//     width: 100%;
-//     background: #4A4A4A;
-// }
-// .emoji-picker-react .emoji-group:before {
-//     background: #F00;
-// }
