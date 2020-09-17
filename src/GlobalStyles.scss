@@ -43,6 +43,7 @@ section {
 
     &.main {
         display: flex;
+        position: relative;
         max-width: 1400px;
         height: 100vh;
         background-color: #EDEDED;

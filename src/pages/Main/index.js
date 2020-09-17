@@ -8,6 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import ChatItem from '../../components/ChatItem';
 import ChatIntro from '../../components/ChatIntro';
 import ChatWindow from '../../components/ChatWindow';
+import NewChat from '../../components/NewChat';
 
 import './styles.scss';
 
@@ -18,6 +19,7 @@ const Main = () => {
         {chatId: 2, title: 'Fulana', image:'https://user-images.githubusercontent.com/62356988/92667795-4d80b500-f2e3-11ea-824c-f4bbf0266ce7.png'}
     ])
 
+    const [showNewChat, setShowNewChat] = useState(false)
     const [activeChat, setActiveChat] = useState({})
     const [user, setUser] = useState({
         id: 123,
@@ -25,17 +27,27 @@ const Main = () => {
         name: 'Marlin Poze'
     })
 
+    function handleNewChat() {
+        setShowNewChat(true)
+    }
+
     return (
         <section className="main">
-            
             <aside className="container">{/* Left container */}
+                <NewChat
+                    chatList={chatList}
+                    user={user}
+                    show={showNewChat}
+                    setShow={setShowNewChat}
+                />
+
                 <header>{/* Top header */}
                     <img src={user.avatar} alt="Avatar"/>
                     <div className="buttons">
                         <div className="btn">
                             <DonutLargeIcon fontSize="small" style={{color: '#919191'}}/>
                         </div>
-                        <div className="btn">
+                        <div onClick={handleNewChat} className="btn">
                             <ChatIcon fontSize="small" style={{color: '#919191'}}/>
                         </div>
                         <div className="btn">
