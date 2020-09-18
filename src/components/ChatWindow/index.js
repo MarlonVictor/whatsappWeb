@@ -99,8 +99,8 @@ const ChatWindow = ({ user }) => {
         <div className="chatWindow">
             <header>{/* Top header */}
                 <div className="info">
-                    <img src="https://user-images.githubusercontent.com/62356988/92667795-4d80b500-f2e3-11ea-824c-f4bbf0266ce7.png" alt="avatar"/>
-                    <p>Marlon</p>
+                    <img src={user.avatar} alt="avatar"/>
+                    <p>{user.name}</p>
                 </div>
                 <div className="buttons">
                     <div className="btn">

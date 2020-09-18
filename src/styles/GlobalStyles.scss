@@ -17,7 +17,7 @@ html {
     min-height: 100%;
     background-color: $bg-color;
     font-family: 'Segoe UI', Helvetica Neue, Helvetica;
-    overflow: hidden;
+    
 
     //Background design
     &::before {
@@ -35,12 +35,26 @@ section {
     background: #FFF;
     width: 100%;
     margin: 0 auto;
+    border-radius: 3px;
     box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.400);
 
     @media(min-width: 1445px) {
         margin: 2% auto;
     }
 
+    &.init {
+        position: relative;
+        padding: 70px 55px;
+        margin-top: 90px;
+        width: 93%;
+        max-width: 1000px;
+        min-height: 600px;
+
+        @media(max-width: 620px) {
+            width: 100%;
+            padding: 50px 20px;
+        }
+    }
     &.main {
         display: flex;
         position: relative;
