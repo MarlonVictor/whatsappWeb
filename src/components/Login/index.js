@@ -17,9 +17,11 @@ const Login = ({ onReceive }) => {
     //Integration with facebook
     async function handleFacebookLogin() {
         let result = await api.fbPopup()
-        if(result) {
+
+        try {
             onReceive(result.user)
-        } else {
+
+        } catch {
             showAlertMsg()
             console.alert('Error!')
         }

@@ -1,19 +1,36 @@
-import React, { useState } from 'react';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import React, { useState, useEffect } from 'react';
+
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
+import Api from '../../api';
 
 import './styles.scss';
 
 
 const NewChat = ({user, chatList, show, setShow}) => {
-    const [list, setList] = useState([
-        {id: 1, name: 'Ela', avatar:'https://user-images.githubusercontent.com/62356988/92667795-4d80b500-f2e3-11ea-824c-f4bbf0266ce7.png'},
-        {id: 2, name: 'Ela', avatar:'https://user-images.githubusercontent.com/62356988/92667795-4d80b500-f2e3-11ea-824c-f4bbf0266ce7.png'},
-        {id: 3, name: 'Ela', avatar:'https://user-images.githubusercontent.com/62356988/92667795-4d80b500-f2e3-11ea-824c-f4bbf0266ce7.png'}
-    ])
+    const [list, setList] = useState([])
+
+    //Form the conversation list
+    useEffect(() => {
+        async function getList() {
+            if(user !== null) {
+                let results = await Api.getContactList(user.id)
+                setList(results)
+            }
+        }
+        getList()
+    }, [user])
 
     //Btn close
     function handleClose() {
         setShow(false)
+    }
+
+    //onClick to start a new conversation 
+    async function addNewChat(user2) {
+        await Api.addNewChat(user, user2)
+
+        handleClose()
     }
 
 
@@ -28,7 +45,7 @@ const NewChat = ({user, chatList, show, setShow}) => {
 
             <div className="list">{/* Contact list */}
             {list.map((item, key) => (
-                    <div className="item" key={key}>
+                    <div onClick={() => addNewChat(item)} className="item" key={key}>
                         <img src={item.avatar} alt={item.name}/>
                         <p>{item.name}</p>
                     </div>

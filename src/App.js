@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import Api from './api';
 
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import ChatIcon from '@material-ui/icons/Chat';
@@ -18,11 +20,19 @@ import './styles/App.scss';
 const App = () => {
     const [showNewChat, setShowNewChat] = useState(false)
     const [activeChat, setActiveChat] = useState({})
-    const [user, setUser] = useState(null)
-    const [chatList, setChatList] = useState([
-        {chatId: 1, title: 'Ela', image:'https://user-images.githubusercontent.com/62356988/92667795-4d80b500-f2e3-11ea-824c-f4bbf0266ce7.png'},
-        {chatId: 2, title: 'Fulana', image:'https://user-images.githubusercontent.com/62356988/92667795-4d80b500-f2e3-11ea-824c-f4bbf0266ce7.png'}
-    ])
+    const [chatList, setChatList] = useState([])
+    const [user, setUser] = useState({
+        id: 'gJUZ513yu6S0wPaVYxTiRsqeMcj1',
+        name: 'Marlon Victor',
+        avatar: 'https://scontent-gig2-1.xx.fbcdn.net/v/t1.0-1/c2.0.160.160a/p160x160/88056612_1806050082859617_249113218474049536_n.jpg?_nc_cat=103&_nc_sid=dbb9e7&_nc_eui2=AeHhMpE_OgZ5cG08Rhob0JiC5u9cHW-Fb__m71wdb4Vv_z4pYTuA71t4bFrcL-3iYkwxcnuI4mQnuZbvQyumZTWy&_nc_ohc=iMLvZr4y9ukAX-olwf_&_nc_ht=scontent-gig2-1.xx&oh=608ff4f389d9f445f748c6ffafcaa53f&oe=5F917EA1'
+    })
+
+    useEffect(() => {
+        if(user !== null) {
+            let unsub = Api.onChatList(user.id, setChatList)
+            return unsub
+        }
+    }, [user])
 
     //New chat button
     function handleNewChat() {
@@ -37,6 +47,7 @@ const App = () => {
             avatar: u.photoURL
         }
 
+        await Api.addUser(newUser)
         setUser(newUser)
     }
 
@@ -44,6 +55,7 @@ const App = () => {
     if(user === null) {
         return (<Login onReceive={handleLoginData}/>)
     }
+    
 
     return (
         <section className="main">
