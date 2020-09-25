@@ -52,7 +52,7 @@ const Login = ({ onReceive }) => {
                     {showAlert && <p className="alert">Erro! Faça o login novamente</p>}
                 </div>
                 
-                <img src="https://user-images.githubusercontent.com/62356988/93633601-97455b80-f9c5-11ea-8f6b-1fc57ac7207f.png"/>
+                <img src="https://user-images.githubusercontent.com/62356988/93633601-97455b80-f9c5-11ea-8f6b-1fc57ac7207f.png" alt="qrcode"/>
             </main>
         </section>
     )

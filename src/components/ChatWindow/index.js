@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 
+import Api from '../../api';
+
 import SearchIcon from '@material-ui/icons/Search';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -14,7 +16,7 @@ import MessageItem from '../MessageItem';
 import './styles.scss';
 
 
-const ChatWindow = ({ user }) => {
+const ChatWindow = ({ user, data }) => {
     //Transpiler config
     let recognition = null;
     let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
@@ -28,33 +30,16 @@ const ChatWindow = ({ user }) => {
     const [sendMsg, setSendMsg] = useState(false)
     const [emojiOpen, setEmojiOpen] = useState(false)
     const [text, setText] = useState('')
-    const [list, setList] = useState([
-        {body: 'AQUI É', author: 123, date: '14:00'}, 
-        {body: 'XANDAO', author: 123, date: '14:00'},
-        {body: 'RESPEITA', author: 1, date: '14:00'},
-        {body: 'XANDAO', author: 123, date: '14:00'},
-        {body: 'RESPEITA', author: 1, date: '14:00'},
-        {body: 'XANDAO', author: 123, date: '14:00'},
-        {body: 'RESPEITA', author: 1, date: '14:00'},
-        {body: 'XANDAO', author: 123, date: '14:00'},
-        {body: 'RESPEITA', author: 1, date: '14:00'},
-        {body: 'XANDAO', author: 123, date: '14:00'},
-        {body: 'RESPEITA', author: 1, date: '14:00'},
-        {body: 'XANDAO', author: 123, date: '14:00'},
-        {body: 'RESPEITA', author: 1, date: '14:00'},
-        {body: 'XANDAO', author: 123, date: '14:00'},
-        {body: 'RESPEITA', author: 1, date: '14:00'},
-        {body: 'XANDAO', author: 123, date: '14:00'},
-        {body: 'RESPEITA', author: 1, date: '14:00'},
-        {body: 'XANDAO', author: 123, date: '14:00'},
-        {body: 'RESPEITA', author: 1, date: '14:00'},
-        {body: 'XANDAO', author: 123, date: '14:00'},
-        {body: 'RESPEITA', author: 1, date: '14:00'},
-        {body: 'XANDAO', author: 123, date: '14:00'},
-        {body: 'RESPEITA', author: 1, date: '14:00'},
-        {body: 'RESPEITA', author: 1, date: '14:00'},
-        {body: 'RESPEITA', author: 1, date: '14:00'}
-    ])
+    const [list, setList] = useState([])
+    const [users, setUsers] = useState([])
+
+    //Monitors chat messages
+    useEffect(() => {
+        setList([])
+        let unsub = Api.onChatContent(data.chatId, setList, setUsers)
+
+        return unsub
+    }, [data.chatId])
 
     //Makes the chat scroll start below
     const body = useRef()
@@ -75,8 +60,21 @@ const ChatWindow = ({ user }) => {
         setEmojiOpen(false)
     }
 
+    //Call handleSendClick when pressing enter
+    function handleInputKeyUp(e) {
+        if(e.keyCode === 13) {
+            handleSendClick()
+        }
+    }
+
     //Icon functions
-    function handleSendClick() {}
+    function handleSendClick() {
+        if(text !== '') {
+            Api.sendMessage(data, user.id, 'text', text, users)
+            setText('')
+            setEmojiOpen(false)
+        }
+    }
     function handleMicClick() {
         if(recognition !== null) {
             recognition.onstart = () => {
@@ -99,8 +97,8 @@ const ChatWindow = ({ user }) => {
         <div className="chatWindow">
             <header>{/* Top header */}
                 <div className="info">
-                    <img src={user.avatar} alt="avatar"/>
-                    <p>{user.name}</p>
+                    <img src={data.image} alt="avatar"/>
+                    <p>{data.title}</p>
                 </div>
                 <div className="buttons">
                     <div className="btn">
@@ -157,6 +155,7 @@ const ChatWindow = ({ user }) => {
                             e.target.value !== '' ? setSendMsg(true) : setSendMsg(false)
                             setText(e.target.value)
                         }}
+                        onKeyUp={handleInputKeyUp}
                     />
                 </div>
                 <div className="pos">
