@@ -44,7 +44,7 @@ const NewChat = ({user, chatList, show, setShow}) => {
             </header>
 
             <div className="list">{/* Contact list */}
-            {list.map((item, key) => (
+                {list.map((item, key) => (
                     <div onClick={() => addNewChat(item)} className="item" key={key}>
                         <img src={item.avatar} alt={item.name}/>
                         <p>{item.name}</p>

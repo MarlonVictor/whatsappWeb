@@ -19,7 +19,7 @@ import './styles/App.scss';
 
 const App = () => {
     const [showNewChat, setShowNewChat] = useState(false)
-    const [activeChat, setActiveChat] = useState({})
+    const [activeChat, setActiveChat] = useState([])
     const [chatList, setChatList] = useState([])
     const [user, setUser] = useState(null)
 
