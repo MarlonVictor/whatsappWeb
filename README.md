@@ -1,9 +1,8 @@
 <p align="center">
-  <img src="https://www.flaticon.com/svg/static/icons/svg/2111/2111728.svg" width="150px">
+  <img src="https://www.flaticon.com/svg/static/icons/svg/2111/2111728.svg" width="140px">
 </p><br/>
 
 <p align="center">
-  <img src="https://img.shields.io/netlify/8dcf5f7b-1426-4efd-bf39-3cb9f856fb51?color=4CAF50&logo=Netlify&style=flat-square">
   <img src="https://img.shields.io/github/repo-size/MarlonVictor/whatsappWeb?color=4CAF50&logo=GitHub&style=flat-square">
   <img src="https://img.shields.io/github/stars/MarlonVictor/whatsappWeb?color=4CAF50&style=flat-square&logo=github">
   <img src="https://img.shields.io/github/license/MarlonVictor/whatsappWeb?color=4CAF50&style=flat-square">
@@ -28,10 +27,6 @@ Protótipo da versão web do Whatsapp. Essa SPA utiliza a autenticação de usu�
 <p align="center">
     <img src="https://user-images.githubusercontent.com/62356988/94496070-c5971800-01c9-11eb-8b97-550948e03237.gif">
 </p>
-
-## Acesse
-* Nessa demo só é possivel utilizar o meu usuário.
-* Link do projeto: [Whatsapp Web](https://whatsappweb-ui.netlify.app/)  
 
 ## Como Rodar
 ### Clone o repositório
